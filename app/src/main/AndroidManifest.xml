@@ -30,18 +30,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".ui.ViewAttendanceActivity"
+        <activity
+            android:name=".ui.ViewAttendanceActivity"
+            android:parentActivityName=".ui.HomeActivity" />
+        <activity android:name=".ui.BrowserActivity"
+            android:theme="@style/FullscreenTheme"
             android:parentActivityName=".ui.HomeActivity"/>
-
     </application>
 
 </manifest>

@@ -120,14 +120,18 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
     }
 
     private fun redirectToUrl(url: String) {
-        try {
-            val intent = Intent("android.intent.action.VIEW",
-                Uri.parse(url))
-            startActivity(intent)
+        val intent = Intent(this, BrowserActivity::class.java)
+        intent.putExtra(BrowserActivity.URL_TAG, url)
+        startActivity(intent)
 
-        } catch (e: ActivityNotFoundException) {
-
-        }
+//        try {
+//            val intent = Intent("android.intent.action.VIEW",
+//                Uri.parse(url))
+//            startActivity(intent)
+//
+//        } catch (e: ActivityNotFoundException) {
+//
+//        }
 
     }
 

@@ -23,7 +23,7 @@ class ViewAttendanceActivity : AbstractActivity<DashboardViewModel>() {
         setContentView(R.layout.activity_view_attendance)
 
         val supportActionBar = getSupportActionBar()
-        supportActionBar?.title = ""
+        supportActionBar?.title = getString(R.string.lblViewAttendance)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black)
 
         adapter = ViewAttendanceAdapter()
