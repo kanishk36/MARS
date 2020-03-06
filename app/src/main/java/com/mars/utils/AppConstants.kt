@@ -6,6 +6,7 @@ class AppConstants {
 
         const val ERROR = "error"
         const val SUCCESS = "success"
+        const val OK = "ok"
 
         //error codes
         const val SYS_HTTP_ERROR = "SYS_HTTP_ERROR"
@@ -13,6 +14,8 @@ class AppConstants {
         const val API_TIMEOUT_ERROR = "API_TIMEOUT_ERROR"
         const val SYS_DEFAULT_ERROR = "SYS_DEFAULT_ERROR"
         const val INTERNET_ERROR = "INTERNET_ERROR"
+
+        private const val API_KEY = "AIzaSyDc09R3rxRP1_4J2K6N4qxAO-BgdTeDVGE"
 
     }
 
@@ -25,6 +28,9 @@ class AppConstants {
             val VIEW_ATTENDANCE_URL = "viewatten.php?id=%s"
             val FAQ_URL = "http://marscltc.com/faq.php"
             val USER_GUIDE_URL = "http://marscltc.com/userguide.php"
+
+            val GOOGLE_API = "https://maps.googleapis.com/maps/api/geocode/"
+            val GEOCODING_URL = "json?latlng=%s&key="+ API_KEY
         }
     }
 

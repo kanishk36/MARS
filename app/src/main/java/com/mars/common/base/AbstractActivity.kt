@@ -134,10 +134,34 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
 
     }
 
-    fun logOut() {
+    fun showLogOutDialog(redirect: Boolean) {
+
+        var dialog: Dialog? = null
+
+        val dialogBuilder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
+        dialogBuilder.setMessage(getString(R.string.sure_to_logout))
+        dialogBuilder.setPositiveButton(getString(R.string.lblOk), { dialogInterface, i ->
+            dialog?.dismiss()
+
+            if(redirect) {
+                logOut()
+            }
+            finish()
+
+        })
+
+        dialogBuilder.setNegativeButton(getString(R.string.lblCancel), { dialogInterface, i ->
+            dialog?.dismiss()
+        })
+
+        dialog = dialogBuilder.create()
+        dialog?.setCancelable(false)
+        dialog?.show()
+    }
+
+    private fun logOut() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun getErrorDescription(errorInfo: ErrorInfo): String {

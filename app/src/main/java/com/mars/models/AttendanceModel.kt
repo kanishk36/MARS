@@ -8,5 +8,7 @@ class AttendanceModel: BaseStatusModel() {
     lateinit var location: String
     lateinit var time: String
     lateinit var date: String
+    lateinit var aattendance: String
+    lateinit var comment: String
 
 }

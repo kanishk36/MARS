@@ -19,13 +19,16 @@ object LoginApiStore: BaseApiStore() {
 
         interactionResultHandler(observable, LoginResponse::class.java)
             .subscribe { response ->
-                if(response.Login != null && !response.Login.isEmpty()) {
-                    val status = response.Login[0].Status
-                    if(AppConstants.SUCCESS.equals(status, ignoreCase = true)) {
-                        response.setSuccess()
+                if(response.result!!.errorInfo == null) {
 
-                    } else {
-                        response.setError(AppConstants.ERROR, response.Login[0].message)
+                    if(response.Login != null && !response.Login.isEmpty()) {
+                        val status = response.Login[0].Status
+                        if(AppConstants.SUCCESS.equals(status, ignoreCase = true)) {
+                            response.setSuccess()
+
+                        } else {
+                            response.setError(AppConstants.ERROR, response.Login[0].message)
+                        }
                     }
                 }
 

@@ -91,6 +91,28 @@ public enum ServiceInvoker {
 
     }
 
+    public <T> Observable<T> getPlace(final String url, final Class<T> returnClsType) {
+        RxCallAdapterFactory callFact = (RxCallAdapterFactory) RxCallAdapterFactory.create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(getHttpClient())
+                .baseUrl(AppConstants.ServiceURLs.Companion.getGOOGLE_API())
+                .addConverterFactory(ToStringConverterFactory.create())
+                .addCallAdapterFactory(callFact)
+                .build();
+
+        APICaller caller = retrofit.create(APICaller.class);
+        Observable<Response<String>> responseObsrv = caller.get(url);
+
+        return responseObsrv.map(new Function<Response<String>, T>() {
+            @Override
+            public T apply(Response<String> response) {
+                String strResp = response.body();
+                return ServiceInvoker.this.decryptResponse(strResp, returnClsType);
+            }
+        });
+    }
+
     //this method will give the http client for header connection
     private OkHttpClient getHttpClient(){
 

@@ -2,6 +2,7 @@ package com.mars.common.stores
 
 import com.mars.common.listeners.APIResponseListener
 import com.mars.common.listeners.ProgressIndicator
+import com.mars.models.dashboard.GeoLocationResponse
 import com.mars.models.dashboard.MarkAttendanceResponse
 import com.mars.models.dashboard.ViewAttendanceResponse
 import com.mars.network.ServiceInvoker
@@ -21,13 +22,15 @@ object DashboardApiStore: BaseApiStore() {
 
         interactionResultHandler(observable, MarkAttendanceResponse::class.java)
             .subscribe { response ->
-                if(response.Attendance != null && !response.Attendance.isEmpty()) {
-                    val status = response.Attendance[0].Status
-                    if(AppConstants.SUCCESS.equals(status, ignoreCase = true)) {
-                        response.setSuccess()
+                if(response.result!!.errorInfo == null) {
+                    if(response.Attendance != null && !response.Attendance.isEmpty()) {
+                        val status = response.Attendance[0].Status
+                        if(AppConstants.SUCCESS.equals(status, ignoreCase = true)) {
+                            response.setSuccess()
 
-                    } else {
-                        response.setError(AppConstants.ERROR, response.Attendance[0].message)
+                        } else {
+                            response.setError(AppConstants.ERROR, response.Attendance[0].message)
+                        }
                     }
                 }
 
@@ -48,8 +51,30 @@ object DashboardApiStore: BaseApiStore() {
         interactionResultHandler(observable, ViewAttendanceResponse::class.java)
             .subscribe { response ->
 
-                if(response.ViewAtten != null && !response.ViewAtten.isEmpty()) {
-                    response.setSuccess()
+                if(response.result!!.errorInfo == null) {
+                    if(response.ViewAtten != null && !response.ViewAtten.isEmpty()) {
+                        response.setSuccess()
+                    }
+                }
+
+                evaluateServiceResponse(response, listener)
+                progress.onEndProgress()
+            }
+    }
+
+    fun getPlace(listener: APIResponseListener, progress: ProgressIndicator, latLng: String) {
+
+        progress.onStartProgress()
+
+        val url = AppConstants.ServiceURLs.GEOCODING_URL.format(latLng)
+        val observable = ServiceInvoker.Instance.getPlace(url, GeoLocationResponse::class.java)
+
+        interactionResultHandler(observable, GeoLocationResponse::class.java)
+            .subscribe { response ->
+                if(response.result!!.errorInfo == null) {
+                    if(AppConstants.OK.equals(response.status, ignoreCase = true)) {
+                        response.setSuccess()
+                    }
                 }
 
                 evaluateServiceResponse(response, listener)

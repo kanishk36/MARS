@@ -77,7 +77,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:paddingTop="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"
-            android:text="Building No 303, Near Nirman Vihar Metro \n New Delhi - 110092"/>
+            android:visibility="gone"/>
 
         <LinearLayout android:id="@+id/btnRefreshLocation"
             android:layout_width="wrap_content"

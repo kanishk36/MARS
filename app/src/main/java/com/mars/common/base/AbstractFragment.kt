@@ -58,7 +58,7 @@ abstract class AbstractFragment<V : BaseViewModel>: Fragment() {
         baseActivity!!.showSuccess(message)
     }
 
-    fun logOut() {
-        baseActivity!!.logOut()
+    fun showLogOutDialog(redirect: Boolean) {
+        baseActivity!!.showLogOutDialog(redirect)
     }
 }

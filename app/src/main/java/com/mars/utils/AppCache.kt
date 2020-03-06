@@ -1,5 +1,6 @@
 package com.mars.utils
 
+import android.location.Location
 import com.mars.models.UserInfo
 import java.util.concurrent.ConcurrentHashMap
 
@@ -9,6 +10,8 @@ enum class AppCache {
 
     private var appCache: MutableMap<String, Any>? = ConcurrentHashMap()
     private lateinit var mUserInfo: UserInfo
+    private var mLocation: Location? = null
+    private var mPlace: String? = null
 
     /**
      * Thsi method return the data stored in hashmap
@@ -91,6 +94,22 @@ enum class AppCache {
 
     fun getUserInfo() : UserInfo {
         return mUserInfo
+    }
+
+    fun setLocation(location: Location) {
+        mLocation = location
+    }
+
+    fun getLocation() : Location? {
+        return mLocation
+    }
+
+    fun setPlace(place: String) {
+        mPlace = place
+    }
+
+    fun getPlace(): String? {
+        return mPlace
     }
 
 }

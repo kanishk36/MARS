@@ -1,43 +1,34 @@
-package com.mars.ui.dashboard
+package com.mars.ui
 
-
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.mars.R
-import com.mars.common.base.AbstractFragment
+import com.mars.common.base.AbstractActivity
 import com.mars.ui.adapters.ViewAttendanceAdapter
 import com.mars.utils.AppCache
 import com.mars.viewmodels.DashboardViewModel
 
-/**
- * A simple [AbstractFragment] subclass.
- */
-class ViewAttendanceFragment : AbstractFragment<DashboardViewModel>() {
-
-    private var adapter: ViewAttendanceAdapter? = null
+class ViewAttendanceActivity : AbstractActivity<DashboardViewModel>() {
 
     override val viewModel: DashboardViewModel
         get() = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
+    private var adapter: ViewAttendanceAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_view_attendance)
+
+        val supportActionBar = getSupportActionBar()
+        supportActionBar?.title = ""
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black)
+
         adapter = ViewAttendanceAdapter()
-    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_attendance, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val listView = view.findViewById<RecyclerView>(R.id.attendanceGrid)
+        val listView = findViewById<RecyclerView>(R.id.attendanceGrid)
         listView.adapter = adapter
 
         registerObservers()

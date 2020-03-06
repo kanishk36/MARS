@@ -19,7 +19,6 @@ import com.mars.models.MenuOption
 import com.mars.models.UserInfo
 import com.mars.ui.adapters.MenuAdapter
 import com.mars.ui.dashboard.MarkAttendanceFragment
-import com.mars.ui.dashboard.ViewAttendanceFragment
 import com.mars.utils.AppCache
 import com.mars.utils.AppConstants
 import com.mars.viewmodels.DashboardViewModel
@@ -58,7 +57,7 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
         findViewById<View>(R.id.nav_view).findViewById<TextView>(R.id.lblName).text = userInfo.UserId
 
         findViewById<View>(R.id.nav_view).findViewById<ImageView>(R.id.btnLogout).setOnClickListener({
-            logOut()
+            showLogOutDialog(true)
         })
 
         pushFragment(true, MarkAttendanceFragment(), R.id.container)
@@ -66,7 +65,7 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
 
     override fun onBackPressed() {
         if(this.supportFragmentManager.backStackEntryCount == 1) {
-            finish()
+            showLogOutDialog(false)
         } else {
             super.onBackPressed()
         }
@@ -98,7 +97,8 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
         when(selectedOption) {
 
             R.string.lblViewAttendance -> {
-                pushFragment(true, ViewAttendanceFragment(), R.id.container)
+//                pushFragment(true, ViewAttendanceFragment(), R.id.container)
+                redirectToViewAttendance()
             }
 
             R.string.lblMarkAttendance -> {
@@ -136,6 +136,11 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
         if(fragCount > 1) {
             this.supportFragmentManager.popBackStack(MarkAttendanceFragment::class.java.name, 0)
         }
+    }
+
+    fun redirectToViewAttendance() {
+        val intent = Intent(this, ViewAttendanceActivity::class.java)
+        startActivity(intent)
     }
 
 }
