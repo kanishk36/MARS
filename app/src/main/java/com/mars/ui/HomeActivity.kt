@@ -106,7 +106,7 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
             }
 
             R.string.lblContact -> {
-
+                redirectToUrl(AppConstants.ServiceURLs.CONTACT_URL)
             }
 
             R.string.lblFAQ -> {
