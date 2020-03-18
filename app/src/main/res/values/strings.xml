@@ -7,18 +7,20 @@
     <string name="password">Password</string>
 
     <string name="lblPresent">Present</string>
-    <string name="lblSpecialLeave">Special Leave</string>
+    <string name="lblSpecialLeave">Special Holiday</string>
     <string name="lblLeave">Leave</string>
     <string name="lblMarkAttendance">Mark Attendance</string>
     <string name="lblRefreshLocation">Refresh Location</string>
     <string name="lblLogout">Logout</string>
     <string name="lblViewAttendance">View Attendance</string>
+    <string name="lblDailyActivity">Daily Activity</string>
     <string name="lblContact">Contact</string>
     <string name="lblFAQ">FAQ\'s</string>
     <string name="lblUserGuide">User Guide</string>
 
     <string name="lblOk">OK</string>
     <string name="lblCancel">Cancel</string>
+    <string name="lblSubmit">Submit</string>
     <string name="username_field_empty_error">Please enter username</string>
     <string name="password_field_empty_error">Please enter password</string>
     <string name="mark_attendance_selection_error">Please select attendance option</string>

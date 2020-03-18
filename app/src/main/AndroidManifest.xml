@@ -39,9 +39,12 @@
         <activity
             android:name=".ui.ViewAttendanceActivity"
             android:parentActivityName=".ui.HomeActivity" />
-        <activity android:name=".ui.BrowserActivity"
-            android:theme="@style/FullscreenTheme"
-            android:parentActivityName=".ui.HomeActivity"/>
+        <activity
+            android:name=".ui.BrowserActivity"
+            android:parentActivityName=".ui.HomeActivity"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".ui.MarkDailyActivity"
+            android:parentActivityName=".ui.HomeActivity" />
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mars.common.base.BaseViewModel
 import com.mars.common.stores.DashboardApiStore
 import com.mars.models.AttendanceModel
+import com.mars.models.dashboard.DailyActivityResponse
 import com.mars.models.dashboard.GeoLocationResponse
 import com.mars.models.dashboard.MarkAttendanceResponse
 import com.mars.models.dashboard.ViewAttendanceResponse
@@ -15,6 +16,7 @@ class DashboardViewModel: BaseViewModel() {
     val markAttendanceResponse: MutableLiveData<String> = MutableLiveData()
     val viewAttendanceResponse: MutableLiveData<ArrayList<AttendanceModel>> = MutableLiveData()
     val geoLocationResponse: MutableLiveData<String> = MutableLiveData()
+    val dailyActivityResponse: MutableLiveData<String> = MutableLiveData()
 
     fun markAttendance(id: String, location: String, attendance: String) {
         DashboardApiStore.markAttendance(this, this, id, location, attendance)
@@ -26,6 +28,10 @@ class DashboardViewModel: BaseViewModel() {
 
     fun getPlace(latLng: String) {
         DashboardApiStore.getPlace(this, this, latLng)
+    }
+
+    fun markDailyActivity(id: String, dailyActivity: String) {
+        DashboardApiStore.markDailyActivity(this, this, id, dailyActivity)
     }
 
     override fun onSuccess(apiResponse: APIResponse?) {
@@ -42,6 +48,9 @@ class DashboardViewModel: BaseViewModel() {
 
             AppCache.INSTANCE.setPlace(place)
             geoLocationResponse.value = place
+
+        } else if(apiResponse is DailyActivityResponse) {
+            dailyActivityResponse.value = apiResponse.Attendance[0].message
         }
     }
 }

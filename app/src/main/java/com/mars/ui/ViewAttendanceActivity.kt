@@ -1,6 +1,5 @@
 package com.mars.ui
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders

@@ -2,6 +2,7 @@ package com.mars.common.stores
 
 import com.mars.common.listeners.APIResponseListener
 import com.mars.common.listeners.ProgressIndicator
+import com.mars.models.dashboard.DailyActivityResponse
 import com.mars.models.dashboard.GeoLocationResponse
 import com.mars.models.dashboard.MarkAttendanceResponse
 import com.mars.models.dashboard.ViewAttendanceResponse
@@ -77,6 +78,34 @@ object DashboardApiStore: BaseApiStore() {
                     }
                 }
 
+                evaluateServiceResponse(response, listener)
+                progress.onEndProgress()
+            }
+    }
+
+    fun markDailyActivity(listener: APIResponseListener, progress: ProgressIndicator, id: String, dailyActivity: String) {
+
+        progress.onStartProgress()
+
+        val url = AppConstants.ServiceURLs.MARK_ACTIVITY_URL.format(id, dailyActivity)
+        val observable = ServiceInvoker.Instance.invoke<DailyActivityResponse>(
+            url, DailyActivityResponse::class.java, AppConstants.HttpMethods.HTTP_GET
+        )
+
+        interactionResultHandler(observable, DailyActivityResponse::class.java)
+            .subscribe { response ->
+                if(response.result!!.errorInfo == null) {
+                    if(response.Attendance != null && !response.Attendance.isEmpty()) {
+                        val status = response.Attendance[0].Status
+                        if(AppConstants.SUCCESS.equals(status, ignoreCase = true)) {
+                            response.setSuccess()
+
+                        } else {
+                            response.setError(AppConstants.ERROR, response.Attendance[0].message)
+                        }
+                    }
+
+                }
                 evaluateServiceResponse(response, listener)
                 progress.onEndProgress()
             }

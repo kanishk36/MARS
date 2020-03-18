@@ -82,6 +82,7 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
         val menuList = ArrayList<MenuOption>()
         menuList.add(MenuOption(getString(R.string.lblViewAttendance), R.string.lblViewAttendance))
         menuList.add(MenuOption(getString(R.string.lblMarkAttendance), R.string.lblMarkAttendance))
+        menuList.add(MenuOption(getString(R.string.lblDailyActivity), R.string.lblDailyActivity))
         menuList.add(MenuOption(getString(R.string.lblContact), R.string.lblContact))
         menuList.add(MenuOption(getString(R.string.lblFAQ), R.string.lblFAQ))
         menuList.add(MenuOption(getString(R.string.lblUserGuide), R.string.lblUserGuide))
@@ -103,6 +104,10 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
 
             R.string.lblMarkAttendance -> {
                 redirectToMarkAttendance()
+            }
+
+            R.string.lblDailyActivity -> {
+                redirectToMarkDailyActivity()
             }
 
             R.string.lblContact -> {
@@ -142,9 +147,13 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
         }
     }
 
-    fun redirectToViewAttendance() {
+    private fun redirectToViewAttendance() {
         val intent = Intent(this, ViewAttendanceActivity::class.java)
         startActivity(intent)
     }
 
+    private fun redirectToMarkDailyActivity() {
+        val intent = Intent(this, MarkDailyActivity::class.java)
+        startActivity(intent)
+    }
 }

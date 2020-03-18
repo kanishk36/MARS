@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_20"
+    android:paddingEnd="@dimen/dp_20"
+    tools:context=".ui.MarkDailyActivity"
+    android:gravity="center_vertical">
+
+    <EditText
+        android:id="@+id/txtDailyActivity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:background="@drawable/address_block_background"
+        android:paddingStart="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
+        android:hint="@string/lblDailyActivity"
+        android:inputType="textMultiLine"
+        android:gravity="start|top"/>
+
+    <Button android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_blue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:text="@string/lblSubmit"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_40"
+        android:layout_marginEnd="@dimen/dp_40"/>
+
+</LinearLayout>

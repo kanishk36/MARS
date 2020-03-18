@@ -26,6 +26,7 @@ class AppConstants {
             val LOGIN_URL = "login.php?userid=%s&password=%s"
             val MARK_ATTENDANCE_URL = "markatte.php?id=%s&alocation=%s&aattendance=%s"
             val VIEW_ATTENDANCE_URL = "viewatten.php?id=%s"
+            val MARK_ACTIVITY_URL = "markactivity.php?id=%s&aactivity=%s"
             val FAQ_URL = "http://marscltc.com/faq.php"
             val USER_GUIDE_URL = "http://marscltc.com/userguide.php"
             val CONTACT_URL = "http://marscltc.com/contact.php"
