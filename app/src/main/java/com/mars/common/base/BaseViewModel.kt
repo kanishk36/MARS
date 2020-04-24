@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mars.common.listeners.APIResponseListener
 import com.mars.common.listeners.ProgressIndicator
+import com.mars.common.stores.LoginApiStore
 import com.mars.network.APIResponse
 import com.mars.network.ErrorInfo
 
@@ -54,5 +55,9 @@ abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicato
 
     override fun onError(errorInfo: ErrorInfo?) {
         errorResponse.value = errorInfo
+    }
+
+    fun markoutAttendance(id: String) {
+        LoginApiStore.logOut(this, id);
     }
 }

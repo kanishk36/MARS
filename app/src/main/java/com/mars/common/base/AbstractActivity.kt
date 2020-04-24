@@ -14,6 +14,7 @@ import com.mars.LoginActivity
 import com.mars.R
 import com.mars.common.widgets.CustomProgressDialog
 import com.mars.network.ErrorInfo
+import com.mars.utils.AppCache
 import com.mars.utils.AppConstants
 
 abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
@@ -160,6 +161,7 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
     }
 
     private fun logOut() {
+        markoutAttendance()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
@@ -193,4 +195,7 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
 
     }
 
+    private fun markoutAttendance() {
+        viewModel.markoutAttendance(AppCache.INSTANCE.getUserInfo().id)
+    }
 }
