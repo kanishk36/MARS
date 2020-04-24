@@ -1,12 +1,10 @@
 package com.mars.ui
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -28,6 +26,7 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
     private lateinit var drawerLayout: DrawerLayout
 
     private lateinit var userInfo: UserInfo
+
 
     override val viewModel: DashboardViewModel
         get() = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
@@ -56,16 +55,18 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
 
         findViewById<View>(R.id.nav_view).findViewById<TextView>(R.id.lblName).text = userInfo.UserId
 
-        findViewById<View>(R.id.nav_view).findViewById<ImageView>(R.id.btnLogout).setOnClickListener({
-            showLogOutDialog(true)
+        findViewById<View>(R.id.nav_view).findViewById<FrameLayout>(R.id.btnLogout).setOnClickListener({
+            showLogOutDialog()
         })
+
+        registerObservers()
 
         pushFragment(true, MarkAttendanceFragment(), R.id.container)
     }
 
     override fun onBackPressed() {
         if(this.supportFragmentManager.backStackEntryCount == 1) {
-            showLogOutDialog(false)
+            showLogOutDialog()
         } else {
             super.onBackPressed()
         }
@@ -75,6 +76,10 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
         when(view?.id) {
             R.id.btnMenu -> drawerLayout.openDrawer(GravityCompat.START)
         }
+    }
+
+    override fun markoutAttendance() {
+        viewModel.markoutAttendance(AppCache.INSTANCE.getUserInfo().id)
     }
 
     private fun getMenuAdapter(): MenuAdapter {
@@ -155,5 +160,19 @@ class HomeActivity : AbstractActivity<DashboardViewModel>(), View.OnClickListene
     private fun redirectToMarkDailyActivity() {
         val intent = Intent(this, MarkDailyActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun registerObservers() {
+        viewModel.showLoading().observe(this, Observer {
+            showProgressDialog(getString(R.string.loading))
+        })
+
+        viewModel.dismissLoading().observe(this, Observer {
+            hideProgressDialog()
+        })
+
+        viewModel.logoutResponse.observe(this, Observer {
+            logOut()
+        })
     }
 }

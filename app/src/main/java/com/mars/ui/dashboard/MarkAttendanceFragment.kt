@@ -67,8 +67,8 @@ class MarkAttendanceFragment : AbstractFragment<DashboardViewModel>(), LocationU
             validateFields()
         })
 
-        view.findViewById<ImageView>(R.id.btnLogout).setOnClickListener({
-            showLogOutDialog(true)
+        view.findViewById<FrameLayout>(R.id.btnLogout).setOnClickListener({
+            showLogOutDialog()
         })
 
         view.findViewById<LinearLayout>(R.id.btnRefreshLocation).setOnClickListener({
@@ -147,7 +147,6 @@ class MarkAttendanceFragment : AbstractFragment<DashboardViewModel>(), LocationU
 
         }
 
-
     }
 
     private fun registerObservers() {
@@ -172,6 +171,10 @@ class MarkAttendanceFragment : AbstractFragment<DashboardViewModel>(), LocationU
                 showAddress()
                 viewModel.geoLocationResponse.value = ""
             }
+        })
+
+        viewModel.logoutResponse.observe(this, Observer {
+            logOut()
         })
     }
 

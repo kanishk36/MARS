@@ -8,8 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.mars.ui.HomeActivity
 import com.mars.common.base.AbstractActivity
+import com.mars.ui.HomeActivity
+import com.mars.utils.AppCache
 import com.mars.viewmodels.LoginViewModel
 
 class LoginActivity : AbstractActivity<LoginViewModel>() {
@@ -36,6 +37,9 @@ class LoginActivity : AbstractActivity<LoginViewModel>() {
         })
 
         registerObservers()
+    }
+
+    override fun markoutAttendance() {
     }
 
     private fun registerObservers() {

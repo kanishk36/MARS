@@ -5,14 +5,16 @@ import androidx.lifecycle.ViewModel
 import com.mars.common.listeners.APIResponseListener
 import com.mars.common.listeners.ProgressIndicator
 import com.mars.common.stores.LoginApiStore
+import com.mars.models.LogoutResponse
 import com.mars.network.APIResponse
 import com.mars.network.ErrorInfo
-import com.mars.utils.AppCache
+import com.mars.utils.AppConstants
 
 abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicator {
 
     private val showLoading: MutableLiveData<String> = MutableLiveData()
     private val dismissLoading: MutableLiveData<String> = MutableLiveData()
+    val logoutResponse: MutableLiveData<String> = MutableLiveData()
 
     private val successResponse: MutableLiveData<APIResponse> by lazy {
         MutableLiveData< APIResponse >()
@@ -23,14 +25,14 @@ abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicato
     }
 
     override fun onStartProgress() {
-        showLoading.postValue("")
+        showLoading.postValue("Loading")
     }
 
     override fun onUpdateProgress(percentage: Int) {
     }
 
     override fun onEndProgress() {
-        dismissLoading.postValue("")
+        dismissLoading.postValue("dismiss")
     }
 
     fun errorResponse(): MutableLiveData<ErrorInfo>{
@@ -52,6 +54,9 @@ abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicato
 
     override fun onSuccess(apiResponse: APIResponse?) {
         successResponse.value = apiResponse
+        if(apiResponse is LogoutResponse) {
+            logoutResponse.value = AppConstants.SUCCESS
+        }
     }
 
     override fun onError(errorInfo: ErrorInfo?) {
@@ -59,7 +64,6 @@ abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicato
     }
 
     fun markoutAttendance(id: String) {
-        LoginApiStore.logOut(this, id)
-        AppCache.INSTANCE.setUserInfo(null)
+        LoginApiStore.logOut(this, this, id)
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.ViewModelProviders
 import com.mars.common.base.AbstractActivity
+import com.mars.utils.AppCache
 import com.mars.viewmodels.LoginViewModel
 
 /**
@@ -35,4 +36,6 @@ class SplashActivity : AbstractActivity<LoginViewModel>() {
         finish()
     }
 
+    override fun markoutAttendance() {
+    }
 }

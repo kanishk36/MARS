@@ -16,6 +16,7 @@ import com.mars.common.widgets.CustomProgressDialog
 import com.mars.network.ErrorInfo
 import com.mars.utils.AppCache
 import com.mars.utils.AppConstants
+import java.lang.Exception
 
 abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
 
@@ -38,6 +39,7 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
         viewModel.errorResponse().observe(this, Observer {
             showError(it)
         })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -80,7 +82,10 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
         mProgressDialog!!.setCancelable(false)
         mProgressDialog!!.setMessage(msg)
 
-        mProgressDialog!!.show()
+        try {
+            mProgressDialog!!.show()
+        } catch (ex: Exception) {}
+
     }
 
     fun hideProgressDialog() {
@@ -135,7 +140,7 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
 
     }
 
-    fun showLogOutDialog(redirect: Boolean) {
+    fun showLogOutDialog() {
 
         var dialog: Dialog? = null
 
@@ -143,12 +148,7 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
         dialogBuilder.setMessage(getString(R.string.sure_to_logout))
         dialogBuilder.setPositiveButton(getString(R.string.lblOk), { dialogInterface, i ->
             dialog?.dismiss()
-
-            if(redirect) {
-                logOut()
-            }
-            finish()
-
+            markoutAttendance()
         })
 
         dialogBuilder.setNegativeButton(getString(R.string.lblCancel), { dialogInterface, i ->
@@ -160,10 +160,25 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
         dialog?.show()
     }
 
-    private fun logOut() {
-        markoutAttendance()
+    fun pushFragment(addToHistory: Boolean, fragment: Fragment, @IdRes containerViewId: Int) {
+
+        val fragmentTransaction = this.supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(containerViewId, fragment, fragment.javaClass.name)
+        if (addToHistory)
+            fragmentTransaction.addToBackStack(fragment.javaClass.name)
+
+        fragmentTransaction.commitAllowingStateLoss()
+        this.supportFragmentManager.executePendingTransactions()
+
+    }
+
+    abstract fun markoutAttendance()
+
+    fun logOut() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+        finish()
+        AppCache.INSTANCE.setUserInfo(null)
     }
 
     private fun getErrorDescription(errorInfo: ErrorInfo): String {
@@ -183,19 +198,4 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
         return desc!!
     }
 
-    fun pushFragment(addToHistory: Boolean, fragment: Fragment, @IdRes containerViewId: Int) {
-
-        val fragmentTransaction = this.supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(containerViewId, fragment, fragment.javaClass.name)
-        if (addToHistory)
-            fragmentTransaction.addToBackStack(fragment.javaClass.name)
-
-        fragmentTransaction.commitAllowingStateLoss()
-        this.supportFragmentManager.executePendingTransactions()
-
-    }
-
-    private fun markoutAttendance() {
-        viewModel.markoutAttendance(AppCache.INSTANCE.getUserInfo().id)
-    }
 }

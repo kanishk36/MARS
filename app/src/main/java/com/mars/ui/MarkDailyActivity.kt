@@ -61,4 +61,8 @@ class MarkDailyActivity : AbstractActivity<DashboardViewModel>() {
         return !TextUtils.isEmpty(txtDailyActivity.text.toString().trim())
     }
 
+    override fun markoutAttendance() {
+
+    }
+
 }

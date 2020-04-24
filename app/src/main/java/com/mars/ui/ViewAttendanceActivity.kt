@@ -49,4 +49,7 @@ class ViewAttendanceActivity : AbstractActivity<DashboardViewModel>() {
             adapter?.setAttendanceList(it)
         })
     }
+
+    override fun markoutAttendance() {
+    }
 }

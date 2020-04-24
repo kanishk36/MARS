@@ -38,7 +38,9 @@ object LoginApiStore: BaseApiStore() {
             }
     }
 
-    fun logOut(listener: APIResponseListener, id: String) {
+    fun logOut(listener: APIResponseListener, progress: ProgressIndicator, id: String) {
+        progress.onStartProgress()
+
         val url = AppConstants.ServiceURLs.LOG_OUT_URL.format(id)
         val observable = ServiceInvoker.Instance.invoke<LogoutResponse>(
             url, LogoutResponse::class.java, AppConstants.HttpMethods.HTTP_GET
@@ -60,6 +62,7 @@ object LoginApiStore: BaseApiStore() {
                 }
 
                 evaluateServiceResponse(response, listener)
+                progress.onEndProgress()
             }
     }
 }
