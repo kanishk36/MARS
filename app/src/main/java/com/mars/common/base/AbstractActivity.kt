@@ -175,10 +175,10 @@ abstract class AbstractActivity<V : BaseViewModel> : AppCompatActivity() {
     abstract fun markoutAttendance()
 
     fun logOut() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(this, LoginActivity::class.java)
+//        startActivity(intent)
+//        AppCache.INSTANCE.setUserInfo(null)
         finish()
-        AppCache.INSTANCE.setUserInfo(null)
     }
 
     private fun getErrorDescription(errorInfo: ErrorInfo): String {
