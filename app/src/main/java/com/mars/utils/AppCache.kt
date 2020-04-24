@@ -9,7 +9,7 @@ enum class AppCache {
     INSTANCE;
 
     private var appCache: MutableMap<String, Any>? = ConcurrentHashMap()
-    private lateinit var mUserInfo: UserInfo
+    private var mUserInfo: UserInfo? = null
     private var mLocation: Location? = null
     private var mPlace: String? = null
 
@@ -88,12 +88,12 @@ enum class AppCache {
         return false
     }
 
-    fun setUserInfo(userInfo: UserInfo) {
+    fun setUserInfo(userInfo: UserInfo?) {
         mUserInfo = userInfo
     }
 
     fun getUserInfo() : UserInfo {
-        return mUserInfo
+        return mUserInfo!!
     }
 
     fun setLocation(location: Location) {

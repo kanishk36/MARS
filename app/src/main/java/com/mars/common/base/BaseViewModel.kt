@@ -7,6 +7,7 @@ import com.mars.common.listeners.ProgressIndicator
 import com.mars.common.stores.LoginApiStore
 import com.mars.network.APIResponse
 import com.mars.network.ErrorInfo
+import com.mars.utils.AppCache
 
 abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicator {
 
@@ -58,6 +59,7 @@ abstract class BaseViewModel: ViewModel(), APIResponseListener, ProgressIndicato
     }
 
     fun markoutAttendance(id: String) {
-        LoginApiStore.logOut(this, id);
+        LoginApiStore.logOut(this, id)
+        AppCache.INSTANCE.setUserInfo(null)
     }
 }
